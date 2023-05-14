@@ -182,3 +182,66 @@ def game_dict():
             ]
         }
     }
+
+
+def num_points_per_game(name):
+    all_players=game_dict()['home']['players']+game_dict()['away']['players']
+    for player in all_players:
+        if player['name'] == name:
+            return player['points_per_game']
+
+def player_age(name):
+    all_players=game_dict()['home']['players']+game_dict()['away']['players']
+    for player in all_players:
+        if player['name'] == name:
+            return player['age']
+
+def team_colors(name):
+    if name == game_dict()['home']['team_name']:
+        return game_dict()['home']['colors']
+    elif name == game_dict()['away']['team_name']:
+        return game_dict()['away']['colors']
+
+def team_names():
+    team_list = [game_dict()['home']['team_name'], game_dict()['away']['team_name']]
+    return team_list
+
+def player_numbers(name):
+    numbers = []
+    if name == game_dict()['home']['team_name']:
+        for player in game_dict()['home']['players']:
+            numbers.append(player['number'])
+        return numbers
+    elif name == game_dict()['away']['team_name']:
+        for player in game_dict()['away']['players']:
+            numbers.append(player['number'])
+        return numbers
+
+def player_stats(name):
+    all_players=game_dict()['home']['players']+game_dict()['away']['players']
+    for player in all_players:
+        if player['name'] == name:
+            return player
+
+
+def average_rebounds_by_shoe_brand(brand):
+    all_players=game_dict()['home']['players']+game_dict()['away']['players']
+    all_brands=[]
+    for player in all_players:
+        all_brands.append({player['shoe_brand']: player['rebounds_per_game']})
+    consolidated_brands={}
+    for item in all_brands:
+        for key, value in item.items():
+            if key in consolidated_brands:
+                consolidated_brands[key].append(value)
+            else:
+                consolidated_brands[key]=[value]
+    brand_averages = {}
+    for key, value in consolidated_brands.items():
+        brand_averages[key] = sum(value) / len(value)
+    return brand_averages
+
+# brand_sum = sum(consolidated_brands.get(brand,[]))
+# return {brand: float(brand_sum/len(consolidated_brands.get(brand, [])))}
+
+
